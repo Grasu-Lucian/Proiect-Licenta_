@@ -30,3 +30,9 @@
 ## Fifth commit
 - Added the student model to the models folder.
 
+## Sixth commit
+- Added the studentController to the controllers folder.
+- Added the studentRouter to the routes folder.
+- Added the createStudent function to the studentController file.
+- Added the studentRouter to the index.js file.
+( I created the createStudent function to create students)
