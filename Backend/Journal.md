@@ -13,3 +13,8 @@
 
 ## Second commit
 - Added connection to the DB using the Sequelize library.
+
+## Third commit
+- Added the db dialect(variable) to the .env file.
+- Added the path module for resolving the .env file.
+

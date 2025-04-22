@@ -1,11 +1,20 @@
-// Database connection configuration file
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
+
+
 const Sequelize = require('sequelize');
-// Import the Sequelize library
-const sequelize = new Sequelize('Licenta', 'root', 'sixbones', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
-// Create a new Sequelize instance
+
+// Use environment variables from .env
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+  }
+);
+
+// Test the connection
 sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
@@ -13,5 +22,5 @@ sequelize.authenticate()
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
-// Test the connection 
+
 module.exports = sequelize;
