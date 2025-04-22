@@ -33,7 +33,7 @@ const createStudent = async (req, res) => {
     process.env.JWT_SECRET, // Secret key
     {
       expiresIn: process.env.JWT_EXPIRATION,
-      issuer: process.env.JWT_ISSUER, // Issuer claim
+      
     }
   );
 

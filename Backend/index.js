@@ -2,7 +2,9 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 const port = 3307;
+
 const sequelize = require('./config/db');
+
 
 app.use(express.json());
 
