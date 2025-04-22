@@ -18,3 +18,7 @@
 - Added the db dialect(variable) to the .env file.
 - Added the path module for resolving the .env file.
 
+## Fourth commit
+- Added the port variable to the .env file.
+- Added the sync function to the sequelize connection to the index.js file.
+- Added the listen function to the index.js file.
