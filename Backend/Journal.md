@@ -26,3 +26,7 @@
 - Added the sync function to the sequelize connection to the index.js file.
 - Added the listen function to the index.js file.
 (i created the index.js file to make sure the server was running)
+
+## Fifth commit
+- Added the student model to the models folder.
+
