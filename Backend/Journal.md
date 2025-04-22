@@ -10,3 +10,6 @@
 - Added the jsonwebtoken package for managing JWT tokens.
 - Added the mysql2 package for connecting to the MySQL database.
 - Added the sequelize package for interacting with the MySQL database.
+
+## Second commit
+- Added connection to the DB using the Sequelize library.
