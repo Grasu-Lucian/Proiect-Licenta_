@@ -10,15 +10,19 @@
 - Added the jsonwebtoken package for managing JWT tokens.
 - Added the mysql2 package for connecting to the MySQL database.
 - Added the sequelize package for interacting with the MySQL database.
+( As i started the project i had to add the proper packages to the package.json file)
 
 ## Second commit
 - Added connection to the DB using the Sequelize library.
+( Now i decided to make sure there was a proper connection to the DB)
 
 ## Third commit
 - Added the db dialect(variable) to the .env file.
 - Added the path module for resolving the .env file.
+( For protection i decided to add the DB dialect to the .env file)
 
 ## Fourth commit
 - Added the port variable to the .env file.
 - Added the sync function to the sequelize connection to the index.js file.
 - Added the listen function to the index.js file.
+(i created the index.js file to make sure the server was running)
