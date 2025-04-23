@@ -59,3 +59,6 @@
 
 ## Eleventh commit
 - added the updateStudent function to the studentController to update the student username and email
+
+## Twelfth commit
+- added the PasswordChangeStudent function to the studentController to change the student password

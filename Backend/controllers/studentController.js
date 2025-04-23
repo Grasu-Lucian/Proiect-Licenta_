@@ -140,12 +140,43 @@ const getStudent = async (req, res) => {
   // Return the updated student object
   return res.status(200).json({ message: 'Student updated successfully' , Email, FirstName, LastName });
 };
-    
+
+ const PasswordChangeStudent = async (req, res) => {
+   const {  OldPassword, NewPassword } = req.body;
+  // validate the request body
+  if (!OldPassword || !NewPassword) {
+    return res.status(400).json({ message: 'Please provide all the required fields' });
+  }
+  // use the req.id to search for the student
+  const existingStudent = await Student.findByPk(req.userId);
+  if (!existingStudent) {
+    return res.status(400).json({ message: 'The student does not exist' });
+  }
+  // Check if the password is correct
+  const isPasswordCorrect = await bcrypt.compare(OldPassword, existingStudent.Password);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ message: 'Incorrect password' });
+  }
+  // Hash the new password
+  const hashedPassword = await bcrypt.hash(NewPassword, 10);
+  // Update the password
+  const updatedStudent = await Student.update(
+    { Password: hashedPassword },
+    { where: { StudentID: req.userId } }
+  );
+  if (!updatedStudent) {
+    return res.status(400).json({ message: 'There was an error updating the password' });
+  }
+  // Return the updated student object
+  return res.status(200).json({ message: 'Password updated successfully' });
+// validate the old passwrod then change it to the new password
+  }
     
 module.exports = {
     registerStudent,
     loginStudent,
     getStudent,
     getAllStudents,
-    updateStudent
+    updateStudent,
+    PasswordChangeStudent,
     };
