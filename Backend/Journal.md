@@ -37,4 +37,9 @@
 - Added the studentRouter to the index.js file.
 ( I created the createStudent function to create students)
 
+# 2025-04-23
 
+## Seventh commit
+- Changed the createStudent function to registerStudent.
+- Made the registerStudent function  not show the password in the response.
+- Added the loginStudent function to the studentController file.
