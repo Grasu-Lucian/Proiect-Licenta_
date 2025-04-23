@@ -106,10 +106,46 @@ const getStudent = async (req, res) => {
     // Return the students array
     return res.status(200).json(sanitizedStudents);
   };
+//update student email, name, password
+  const updateStudent = async (req, res) => {
+    const { Email, FirstName, LastName} = req.body;
+    //use authmiddleware id to search for the student
+    const existingStudent = await Student.findByPk(req.userId);
+    if (!existingStudent) {
+      return res.status(400).json({ message: 'The student does not exist' });
+    }
+    // validate the request body
+   if( !Email ) {return res.status(400).json({ message: 'Please provide an email' }); }
+   // check if the existing user has the same email as the new one
+   if (existingStudent.Email === Email) {
+     return res.status(400).json({ message: 'you already have that email' });
+   }
+   //check if there is someone else besides you with the same email you want to change  but that is not you
+   const otherStudent = await Student.findOne({ where: { Email } });
+   if (otherStudent && otherStudent.StudentID !== req.userId) {
+     return res.status(400).json({ message: 'there is someone else with that email' });
+   }
+   //check if someone elese is using the email or if you insertetd the same email as before
+  if (!FirstName) { return res.status(400).json({ message: 'Please provide a first name' }); }
+  if (!LastName) { return res.status(400).json({ message: 'Please provide a last name' }); }
+
+  // Update the student
+  const updatedStudent = await Student.update(
+    { Email, FirstName, LastName },
+    { where: { StudentID: req.userId } }
+  );
+  if (!updatedStudent) {
+    return res.status(400).json({ message: 'There was an error updating the student' });
+  }
+  // Return the updated student object
+  return res.status(200).json({ message: 'Student updated successfully' , Email, FirstName, LastName });
+};
+    
     
 module.exports = {
     registerStudent,
     loginStudent,
     getStudent,
-    getAllStudents
+    getAllStudents,
+    updateStudent
     };

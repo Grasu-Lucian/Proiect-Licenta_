@@ -7,4 +7,5 @@ router.post('/students', studentController.registerStudent);
 router.post('/login', studentController.loginStudent);
 router.get('/student', authMiddleware, studentController.getStudent );
 router.get('/students', authMiddleware, studentController.getAllStudents );
+router.put('/student', authMiddleware, studentController.updateStudent );
 module.exports = router;

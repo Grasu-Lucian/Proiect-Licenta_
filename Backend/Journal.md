@@ -56,3 +56,6 @@
 ## Tenth commit
 - added the getAllStudents function to the studentController to get all the students.
 - removed the password from the getAllStudents function.
+
+## Eleventh commit
+- added the updateStudent function to the studentController to update the student username and email
