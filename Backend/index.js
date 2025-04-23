@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 app.use('/api', require('./routes/studentRouter'));
-
+app.use('/api', require('./routes/teacherRouter'));
 sequelize.sync()
   .then(() => {
     app.listen(port, () => {
