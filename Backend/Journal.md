@@ -65,3 +65,6 @@
 
 ## Thirteenth commit
 - added the deleteStudent function to the studentController to delete the student
+
+## Fourteenth commit
+- added teacher model to the models folder
