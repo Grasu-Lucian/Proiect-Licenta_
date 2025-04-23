@@ -43,3 +43,8 @@
 - Changed the createStudent function to registerStudent.
 - Made the registerStudent function  not show the password in the response.
 - Added the loginStudent function to the studentController file.
+
+## Eighth commit
+- Added the authMiddleware to the middleware folder.
+- Created a function to check if the token is valid.
+

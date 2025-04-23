@@ -68,7 +68,7 @@ const loginStudent = async (req, res) => {
     // Return the token and the existing student object
     return res.status(200).json({  message: 'Login successful',token});
   };
-
+ 
 module.exports = {
     registerStudent,
     loginStudent,
