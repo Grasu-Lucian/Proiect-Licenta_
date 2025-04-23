@@ -171,6 +171,20 @@ const getStudent = async (req, res) => {
   return res.status(200).json({ message: 'Password updated successfully' });
 // validate the old passwrod then change it to the new password
   }
+
+const deleteStudent = async (req, res) => {
+  const existingStudent = await Student.findByPk(req.userId);
+  if (!existingStudent) {
+    return res.status(400).json({ message: 'The student does not exist' });
+  }
+  // Delete the student
+  const deletedStudent = await Student.destroy({ where: { StudentID: req.userId } });
+  if (!deletedStudent) {
+    return res.status(400).json({ message: 'There was an error deleting the student' });
+  }
+  // Return a success message
+  return res.status(200).json({ message: 'Student deleted successfully' });
+};
     
 module.exports = {
     registerStudent,
@@ -179,4 +193,5 @@ module.exports = {
     getAllStudents,
     updateStudent,
     PasswordChangeStudent,
+    deleteStudent,
     };

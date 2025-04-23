@@ -9,4 +9,5 @@ router.get('/student', authMiddleware, studentController.getStudent );
 router.get('/students', authMiddleware, studentController.getAllStudents );
 router.put('/student', authMiddleware, studentController.updateStudent );
 router.put('/student/password', authMiddleware, studentController.PasswordChangeStudent );
+router.delete('/student', authMiddleware, studentController.deleteStudent );
 module.exports = router;

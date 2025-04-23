@@ -62,3 +62,6 @@
 
 ## Twelfth commit
 - added the PasswordChangeStudent function to the studentController to change the student password
+
+## Thirteenth commit
+- added the deleteStudent function to the studentController to delete the student
