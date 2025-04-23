@@ -68,3 +68,10 @@
 
 ## Fourteenth commit
 - added teacher model to the models folder
+
+## Fifteenth commit
+- added the getAllTeachers function to the teacherController to get all the teachers
+- added the passwordChangeTeacher function to the teacherController to change the teacher password
+- added the authMiddlewareTeacher to the middleware folder
+- added the teacherRouter to the routes folder
+- added the teacherRouter to the index.js file
