@@ -86,9 +86,30 @@ const getStudent = async (req, res) => {
     // Return the student object without the password
     return res.status(200).json({ FirstName: student.FirstName, LastName: student.LastName, Email: student.Email });
   };
+
+  const getAllStudents = async (req, res) => {
+    // Search for all the students
+    const students = await Student.findAll();
+    if (!students) {
+      return res.status(404).json({ message: 'No students found' });
+    }
+    // show students with the password
+    // filter password from the students array
+    const AllowedFields = ['StudentID', 'FirstName', 'LastName', 'Email'];
+    const sanitizedStudents = students.map(student =>
+      Object.fromEntries(
+        Object.entries(student.toJSON()).filter(([key]) => AllowedFields.includes(key))
+      )
+    );
+    
+
+    // Return the students array
+    return res.status(200).json(sanitizedStudents);
+  };
     
 module.exports = {
     registerStudent,
     loginStudent,
     getStudent,
+    getAllStudents
     };

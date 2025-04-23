@@ -52,3 +52,7 @@
 - fixed the jsonwebtoken from returning an undefined id to returnin the actual id.
 - fixed the authMiddleware to return the userId from the decoded token.
 - added the getStudent function to return the student object without the password.
+
+## Tenth commit
+- added the getAllStudents function to the studentController to get all the students.
+- removed the password from the getAllStudents function.
