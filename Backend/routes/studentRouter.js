@@ -4,7 +4,7 @@ const studentController = require('../controllers/studentController');
 const { authMiddleware } = require('../middleware/authMiddleware');
 
 router.post('/students', studentController.registerStudent);
-router.post('/login', studentController.loginStudent);
+router.post('/student/login', studentController.loginStudent);
 router.get('/student', authMiddleware, studentController.getStudent );
 router.get('/students', authMiddleware, studentController.getAllStudents );
 router.put('/student', authMiddleware, studentController.updateStudent );

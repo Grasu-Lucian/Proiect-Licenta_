@@ -88,41 +88,63 @@ const getTeacher = async (req, res) => {
 };
 // get all teachers
 const getAllTeachers = async (req, res) => {
-  const teachers = await Teacher.findAll();
-  if (!teachers) {
-    return res.status(404).json({ message: 'No teachers found' });
-  }
-
-  // Return the teacher object without the password
-  return res.status(200).json(teachers);
-};
+    // Search for all the teachers
+    const teachers = await Teacher.findAll();
+    if (!teachers || teachers.length === 0) {
+      return res.status(404).json({ message: 'No teachers found' });
+    }
+  
+    // Filter out sensitive fields (e.g., Password) from the teachers array
+    const AllowedFields = ['TeacherID', 'FirstName', 'LastName', 'Email'];
+    const sanitizedTeachers = teachers.map(teacher =>
+      Object.fromEntries(
+        Object.entries(teacher.toJSON()).filter(([key]) => AllowedFields.includes(key))
+      )
+    );
+  
+    // Return the sanitized teachers array
+    return res.status(200).json(sanitizedTeachers);
+  };
 // Update teacher profile
 const updateTeacher = async (req, res) => {
-  const { Email, FirstName, LastName } = req.body;
-
-  // Use authMiddleware to get the teacher ID
-  const existingTeacher = await Teacher.findByPk(req.userId);
-  if (!existingTeacher) {
-    return res.status(400).json({ message: 'The teacher does not exist' });
-  }
-
-  // Validate the request body
-  if (!Email || !FirstName || !LastName) {
-    return res.status(400).json({ message: 'Please provide all the required fields' });
-  }
-
-  // Update the teacher
-  const updatedTeacher = await Teacher.update(
-    { Email, FirstName, LastName },
-    { where: { TeacherID: req.userId } }
-  );
-
-  if (!updatedTeacher) {
-    return res.status(400).json({ message: 'There was an error updating the teacher' });
-  }
-
-  return res.status(200).json({ message: 'Teacher updated successfully', Email, FirstName, LastName });
-};
+    const { Email, FirstName, LastName } = req.body;
+  
+    // Use authMiddleware to get the teacher ID
+    const existingTeacher = await Teacher.findByPk(req.userId);
+    if (!existingTeacher) {
+      return res.status(400).json({ message: 'The teacher does not exist' });
+    }
+  
+    // Validate the request body
+    if (!Email) {
+      return res.status(400).json({ message: 'Please provide an email' });
+    }
+    if (!FirstName) {
+      return res.status(400).json({ message: 'Please provide a first name' });
+    }
+    if (!LastName) {
+      return res.status(400).json({ message: 'Please provide a last name' });
+    }
+  
+    // Check if there is someone else with the same email
+    const otherTeacher = await Teacher.findOne({ where: { Email } });
+    if (otherTeacher && otherTeacher.TeacherID !== req.userId) {
+      return res.status(400).json({ message: 'There is someone else with that email' });
+    }
+  
+    // Update the teacher
+    const updatedTeacher = await Teacher.update(
+      { Email, FirstName, LastName },
+      { where: { TeacherID: req.userId } }
+    );
+  
+    if (!updatedTeacher) {
+      return res.status(400).json({ message: 'There was an error updating the teacher' });
+    }
+  
+    // Return the updated teacher object
+    return res.status(200).json({ message: 'Teacher updated successfully', Email, FirstName, LastName });
+  };
 
 const passwordChangeTeacher = async (req, res) => {
     const { OldPassword, NewPassword } = req.body;

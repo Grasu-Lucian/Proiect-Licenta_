@@ -117,9 +117,6 @@ const getStudent = async (req, res) => {
     // validate the request body
    if( !Email ) {return res.status(400).json({ message: 'Please provide an email' }); }
    // check if the existing user has the same email as the new one
-   if (existingStudent.Email === Email) {
-     return res.status(400).json({ message: 'you already have that email' });
-   }
    //check if there is someone else besides you with the same email you want to change  but that is not you
    const otherStudent = await Student.findOne({ where: { Email } });
    if (otherStudent && otherStudent.StudentID !== req.userId) {
