@@ -27,9 +27,14 @@ const registerStudent = async (req, res) => {
     Email,
     Password: hashedPassword,
   });
+  // get the student id from the backend because we don't have the id in the newStudent object
+  //search it in the database
+  const student = await Student.findOne({ where: { Email } });
+
+
 // Generate a JWT token
   const token = jwt.sign(
-    { userId: newStudent.id }, // Payload
+    { userId: student.StudentID }, // Payload
     process.env.JWT_SECRET, // Secret key
     {
       expiresIn: process.env.JWT_EXPIRATION,
@@ -56,9 +61,13 @@ const loginStudent = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: 'Incorrect email or password' });
     }
+    // get the student id from the backend because we don't have the id in the newStudent object
+    //search it in the database
+    const student = await Student.findOne({ where: { Email } });
+    
     // Generate a JWT token
     const token = jwt.sign(
-      { userId: existingStudent.id }, // Payload
+      { userId: student.StudentID }, // Payload
       process.env.JWT_SECRET, // Secret key
       {
         expiresIn: process.env.JWT_EXPIRATION,
@@ -68,8 +77,18 @@ const loginStudent = async (req, res) => {
     // Return the token and the existing student object
     return res.status(200).json({  message: 'Login successful',token});
   };
- 
+const getStudent = async (req, res) => {
+    // seach for the student with the given id
+    const student = await Student.findByPk(req.userId);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    // Return the student object without the password
+    return res.status(200).json({ FirstName: student.FirstName, LastName: student.LastName, Email: student.Email });
+  };
+    
 module.exports = {
     registerStudent,
     loginStudent,
+    getStudent,
     };

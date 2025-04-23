@@ -48,3 +48,7 @@
 - Added the authMiddleware to the middleware folder.
 - Created a function to check if the token is valid.
 
+## Ninth commit
+- fixed the jsonwebtoken from returning an undefined id to returnin the actual id.
+- fixed the authMiddleware to return the userId from the decoded token.
+- added the getStudent function to return the student object without the password.
