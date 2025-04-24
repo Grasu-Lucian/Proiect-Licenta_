@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api', require('./routes/studentRouter'));
 app.use('/api', require('./routes/teacherRouter'));
+app.use('/api', require('./routes/courseRouter'));
 sequelize.sync()
   .then(() => {
     app.listen(port, () => {

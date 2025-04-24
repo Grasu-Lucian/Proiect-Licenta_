@@ -75,3 +75,9 @@
 - added the authMiddlewareTeacher to the middleware folder
 - added the teacherRouter to the routes folder
 - added the teacherRouter to the index.js file
+
+# 2025-04-24
+
+## Sixteenth commit
+- created a new course model
+- added a function that allows as to create a new course as a teacher 

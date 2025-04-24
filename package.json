@@ -1,0 +1,9 @@
+{
+    "name": "proiect-licenta",
+    "version": "1.0.0",
+    "description": "A project for managing backend services",
+    "main": "index.js",
+    "scripts": {
+      "start": "node Backend/index.js"
+    }
+  }
