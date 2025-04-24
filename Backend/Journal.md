@@ -81,3 +81,6 @@
 ## Sixteenth commit
 - created a new course model
 - added a function that allows as to create a new course as a teacher 
+
+## Seventeenth commit
+- added to the teacherControler a function that returns the username of the teacher via id in the url

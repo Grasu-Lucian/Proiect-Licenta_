@@ -86,6 +86,17 @@ const getTeacher = async (req, res) => {
   // Return the teacher object without the password
   return res.status(200).json({ FirstName: teacher.FirstName, LastName: teacher.LastName, Email: teacher.Email });
 };
+// get teacher by id in the url
+const getTeacherById = async (req, res) => {
+  const teacher = await Teacher.findByPk(req.params.id);
+  if (!teacher) {
+    return res.status(404).json({ message: 'Teacher not found' });
+  }
+
+  // Return the teacher object with only the name 
+  return res.status(200).json({ FirstName: teacher.FirstName, LastName: teacher.LastName });
+  };
+
 // get all teachers
 const getAllTeachers = async (req, res) => {
     // Search for all the teachers
@@ -197,6 +208,7 @@ module.exports = {
   getTeacher,
   getAllTeachers,
   updateTeacher,
+  getTeacherById,
   passwordChangeTeacher,
   deleteTeacher,
 };
