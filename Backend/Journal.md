@@ -84,3 +84,7 @@
 
 ## Seventeenth commit
 - added to the teacherControler a function that returns the username of the teacher via id in the url
+- added to the teacherControler a function that returns all the courses for the teacher
+- added to the teacherControler a function that returns the courses for the students
+
+
