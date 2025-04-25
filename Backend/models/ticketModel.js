@@ -58,6 +58,11 @@ const Ticket = sequelize.define('Ticket', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
+  Status: {
+    type: DataTypes.ENUM('open', 'closed'), // Only two options: 'open' and 'closed'
+    defaultValue: 'open', // Default value is 'open'
+    allowNull: true,
+  },
 }, {
   tableName: 'Tickets',
   timestamps: true,

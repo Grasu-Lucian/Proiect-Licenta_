@@ -14,4 +14,5 @@ router.get('/ticket/:id/teacher', authMiddlewareTeacher, ticketController.getTic
 router.get('/tickets/:id/teacher', authMiddlewareTeacher, ticketController.getAllTickets);
 router.get('/tickets/student', authMiddleware, ticketController.getAllTicketsStudent);
 router.get('/tickets/teacher', authMiddlewareTeacher, ticketController.getAllTicketsTeacher);
+router.put('/ticket/:id/status', authMiddleware, ticketController.updateTicketStatus);
 module.exports = router;

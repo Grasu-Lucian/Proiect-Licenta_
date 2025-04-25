@@ -58,6 +58,7 @@ const createTicketStudentReply = async (req, res) => {
       TicketDescription,
       FKStudentID,
       FKTicketID: TicketID,
+      Status: null,
     });
     return res.status(201).json(newTicket);
 
@@ -82,6 +83,7 @@ const createTicketTeacherReply = async (req, res) => {
       TicketDescription,
       FKTeacherID,
       FKTicketID: TicketID,
+      Status: null,
     });
     return res.status(201).json(newTicket);
 
@@ -123,6 +125,16 @@ const getAllTicketsTeacher = async (req, res) => {
     // Return the tickets object
     return res.status(200).json(tickets);
 }
+const updateTicketStatus = async (req, res) => {
+    const ticket = await Ticket.findByPk(req.params.id);
+    if (!ticket) {
+        return res.status(404).json({ message: 'Ticket not found' });
+    }
+    // update the ticket status to closed
+    ticket.Status = 'closed';
+    await ticket.save();
+    return res.status(200).json(ticket);
+}
 
 
 module.exports = {
@@ -133,4 +145,5 @@ module.exports = {
     getAllTickets,
     getAllTicketsStudent,
     getAllTicketsTeacher,
+    updateTicketStatus,
 };
