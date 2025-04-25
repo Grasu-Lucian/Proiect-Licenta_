@@ -97,3 +97,8 @@
 
 ## Twenty commit
 - added the price field to the course model
+
+## Twenty-first commit
+- added the enrollStudent function to the enrolledController
+- added the model for the enrolled model
+- added the enroll router to the index.js file
