@@ -115,3 +115,6 @@
 
 ## Twenty-fourth commit
 - added the get all lessons for both the teacher and student
+
+## Twenty-fifth commit
+-added all the ticket models and funcitonalities 
