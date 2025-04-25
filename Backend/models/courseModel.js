@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db'); // Adjust the path to your database configuration file
-const Teacher = require('./teacherModel'); // Import the Teacher model for the foreign key relationship
+const sequelize = require('../config/db');
+const Teacher = require('./teacherModel');
 
 const Course = sequelize.define('Course', {
   CourseID: {
@@ -17,9 +17,9 @@ const Course = sequelize.define('Course', {
     allowNull: false,
   },
   CourseStatus: {
-    type: DataTypes.ENUM('public', 'private'), // Allowed values for CourseStatus
+    type: DataTypes.ENUM('public', 'private'),
     allowNull: false,
-    defaultValue: 'private', // Default value
+    defaultValue: 'private',
   },
   CourseDate: {
     type: DataTypes.DATE,
@@ -29,18 +29,24 @@ const Course = sequelize.define('Course', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Teacher, // Reference the Teacher model
+      model: Teacher,
       key: 'TeacherID',
     },
-    onDelete: 'CASCADE', // Delete courses if the teacher is deleted
+    onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
+  Price: { // Add the Price field
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    validate: {
+      min: 0, // Ensure the price is non-negative
+    },
+  },
 }, {
-  tableName: 'Courses', // Optional: specify the table name
-  timestamps: true, // Adds createdAt and updatedAt fields
+  tableName: 'Courses',
+  timestamps: true,
 });
 
-// Define the association between Teacher and Course
 Teacher.hasMany(Course, { foreignKey: 'FKTeacherID' });
 Course.belongsTo(Teacher, { foreignKey: 'FKTeacherID' });
 

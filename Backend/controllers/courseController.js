@@ -2,31 +2,42 @@ const Course = require('../models/courseModel');
 const Teacher = require('../models/teacherModel');
 
 const CreateCourse = async (req, res) => {
-    const { Title, CourseDescription } = req.body;
+    const { Title, CourseDescription, Price } = req.body;
+
     // Check if the teacher exists
     const teacher = await Teacher.findByPk(req.userId);
     if (!teacher) {
         return res.status(400).json({ message: 'Teacher not found' });
     }
+
     // Validate the request body
-    if (!Title || !CourseDescription) {
+    if (!Title || !CourseDescription || Price === undefined) {
         return res.status(400).json({ message: 'Please provide all the required fields' });
     }
-    //there should'nt be two courses with the same title
+
+    // Ensure the price is valid
+    if (Price < 0) {
+        return res.status(400).json({ message: 'Price must be a non-negative value' });
+    }
+
+    // Ensure there aren't two courses with the same title
     const course = await Course.findOne({ where: { Title } });
     if (course) {
         return res.status(400).json({ message: 'There should\'nt be two courses with the same title' });
     }
-    // the course description must be at least 50 characters long
+
+    // Ensure the course description is at least 50 characters long
     if (CourseDescription.length < 50) {
         return res.status(400).json({ message: 'Course description must be at least 50 characters long' });
     }
+
     // Create a new course
     const newCourse = await Course.create({
         Title,
         CourseDescription,
         CourseStatus: 'private',
         FKTeacherID: req.userId,
+        Price, // Include the price
     });
 
     // Return the new course object
@@ -95,6 +106,7 @@ const getCoursesforStudents = async (req, res) => {
                     Title: course.Title,
                     CourseDescription: course.CourseDescription,
                     TeacherName: teacher ? `${teacher.FirstName} ${teacher.LastName}` : 'Unknown',
+                    Price: course.Price, // Include the price
                 };
             })
         );
@@ -116,28 +128,34 @@ const updateCourse = async (req, res) => {
             return res.status(404).json({ message: 'Course not found' });
         }
 
-        // Check if the course belongs to the teacher by comparing the FKTeacherID with the req.userId
+        // Check if the course belongs to the teacher
         if (course.FKTeacherID !== req.userId) {
             return res.status(403).json({ message: 'You do not have permission to update this course' });
         }
 
         // Validate the request body
-        const { Title, CourseDescription } = req.body;
-        if (!Title || !CourseDescription) {
+        const { Title, CourseDescription, Price } = req.body;
+        if (!Title || !CourseDescription || Price === undefined) {
             return res.status(400).json({ message: 'Please provide all the required fields' });
+        }
+
+        // Ensure the price is valid
+        if (Price < 0) {
+            return res.status(400).json({ message: 'Price must be a non-negative value' });
         }
 
         // Update the course
         const updatedCourse = await Course.update(
-            { Title, CourseDescription },
+            { Title, CourseDescription, Price },
             { where: { CourseID: req.params.id } }
         );
+
         if (!updatedCourse) {
             return res.status(404).json({ message: 'Course not found' });
         }
 
         // Return the updated course object
-        return res.status(200).json( { message: 'Course updated successfully' });
+        return res.status(200).json({ message: 'Course updated successfully' });
     } catch (error) {
         console.error('Error updating course:', error);
         return res.status(500).json({ message: 'An error occurred while updating the course' });

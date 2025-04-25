@@ -93,3 +93,7 @@
 
 ## Nineteenth commit
 - added deleteCourse function to the courseController
+
+
+## Twenty commit
+- added the price field to the course model
