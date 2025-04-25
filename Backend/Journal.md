@@ -102,3 +102,9 @@
 - added the enrollStudent function to the enrolledController
 - added the model for the enrolled model
 - added the enroll router to the index.js file
+
+## Twenty-second commit
+- added the lesson model to the models folder
+- added the createLesson function to the lessonController
+- added the lesson router to the index.js file
+- added the CreateLesson function to the lessonController
