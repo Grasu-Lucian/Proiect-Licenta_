@@ -108,3 +108,7 @@
 - added the createLesson function to the lessonController
 - added the lesson router to the index.js file
 - added the CreateLesson function to the lessonController
+
+## Twenty-third commit
+- added the getAllLessons function to the lessonController
+- added the getLesson function to the lessonController
