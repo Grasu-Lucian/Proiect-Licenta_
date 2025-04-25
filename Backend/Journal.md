@@ -87,4 +87,6 @@
 - added to the teacherControler a function that returns all the courses for the teacher
 - added to the teacherControler a function that returns the courses for the students
 
-
+# 2025-04-25
+## Eighteenth commit
+- added updateCourse function to the courseController

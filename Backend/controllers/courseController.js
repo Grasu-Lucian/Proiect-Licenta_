@@ -107,10 +107,48 @@ const getCoursesforStudents = async (req, res) => {
     }
 };
 
+
+const updateCourse = async (req, res) => {
+    try {
+        // Get the course by ID
+        const course = await Course.findByPk(req.params.id);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Check if the course belongs to the teacher by comparing the FKTeacherID with the req.userId
+        if (course.FKTeacherID !== req.userId) {
+            return res.status(403).json({ message: 'You do not have permission to update this course' });
+        }
+
+        // Validate the request body
+        const { Title, CourseDescription } = req.body;
+        if (!Title || !CourseDescription) {
+            return res.status(400).json({ message: 'Please provide all the required fields' });
+        }
+
+        // Update the course
+        const updatedCourse = await Course.update(
+            { Title, CourseDescription },
+            { where: { CourseID: req.params.id } }
+        );
+        if (!updatedCourse) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Return the updated course object
+        return res.status(200).json( { message: 'Course updated successfully' });
+    } catch (error) {
+        console.error('Error updating course:', error);
+        return res.status(500).json({ message: 'An error occurred while updating the course' });
+    }
+};
+
 module.exports = {
     CreateCourse,
     GetTeacherCourse,
     GetTeacherCourses,
     PublishCourse,
     getCoursesforStudents,
+    updateCourse,
 };

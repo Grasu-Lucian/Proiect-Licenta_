@@ -9,5 +9,7 @@ router.get('/courseforteacher/:id', authMiddlewareTeacher, courseController.GetT
 router.get('/coursesforteacher', authMiddlewareTeacher, courseController.GetTeacherCourses);
 // publish course
 router.put('/course/:id', authMiddlewareTeacher, courseController.PublishCourse);
+//update course
+router.put('/courseupdate/:id', authMiddlewareTeacher, courseController.updateCourse);
 router.get('/coursesforstudents', authMiddleware, courseController.getCoursesforStudents);
 module.exports = router;
