@@ -33,23 +33,28 @@ const CreateLesson = async (req, res) => {
     // Return the new lesson object
     return res.status(201).json(newLesson);
 };
-const GetAllLessons = async (req, res) => {
+const GetAllLessonsStudents = async (req, res) => {
     // Get all lessons for the course
     const lessons = await Lesson.findAll({ where: { FKCourseID: req.params.id } });
     if (!lessons) {
         return res.status(404).json({ message: 'No lessons found' });
     }
-
+    // check if the student is enrolled in the course
+    const enrolled = await Enrolled.findOne({ where: { FKStudentID: req.userId, FKCourseID: req.params.id } });
+    if (!enrolled) {
+        return res.status(403).json({ message: 'You do not have permission to access this lessons' });
+    }
     // Return the lessons array
     return res.status(200).json(lessons);
-};      
-const GetLesson = async (req, res) => {
+};     
+
+const GetLessonForStudent = async (req, res) => {
     // Get the lesson by id
-    const lesson = await Lesson.findByPk(req.params.lessonId);
+    const lesson = await Lesson.findByPk(req.params.id);
     if (!lesson) {
         return res.status(404).json({ message: 'Lesson not found' });
     }
- // search the fkcourse id from the lesson into the enrolled table to see if the student has the id 
+ // search the fkcourse id from the lesson into the enrolled table to see if the student has the id
 // of the course in the enrolled table
    const enrolled = await Enrolled.findOne({ where: { FKStudentID: req.userId, FKCourseID: lesson.FKCourseID } });
     if (!enrolled) {
@@ -66,8 +71,55 @@ const GetLesson = async (req, res) => {
     return res.status(200).json(lesson);
 };
 
+const GetAllLessonsForTeacher = async (req, res) => {
+   //find all the lessons for the course by id
+    const lessons = await Lesson.findAll({ where: { FKCourseID: req.params.id } });
+    if (!lessons) {
+        return res.status(404).json({ message: 'No lessons found' });
+    }
+    // check  if the course belongs to the teacher by comparing the FKTeachear with the req.userId
+    const course = await Course.findByPk(req.params.id);
+    if (!course) {
+        return res.status(404).json({ message: 'Course not found' });
+    }
+    if (course.FKTeacherID !== req.userId) {
+        return res.status(403).json({ message: 'You do not have permission to access this lessons' });
+    }
+    // Return the lessons array
+    return res.status(200).json(lessons);
+};
+
+const GetLessonForTeacher = async (req, res) => {
+    // Get the lesson by id
+    const lesson = await Lesson.findByPk(req.params.id);
+    if (!lesson) {
+        return res.status(404).json({ message: 'Lesson not found' });
+    }
+ // search the fkcourse id from the lesson into the enrolled table to see if the teacher  owns the course
+
+// of the course in the enrolled table
+   const course = await Course.findByPk(lesson.FKCourseID);
+    if (!course) {
+        return res.status(404).json({ message: 'Course not found' });
+    }
+    if (course.FKTeacherID !== req.userId) {
+        return res.status(403).json({ message: 'You do not have permission to access this lesson' });
+    }
+   // Return the lesson object
+    return res.status(200).json(lesson);
+
+};
+
+
+
+
+
+
 module.exports = {
     CreateLesson,
-    GetAllLessons,
-    GetLesson,
+    GetAllLessonsStudents,
+    GetAllLessonsForTeacher,
+    GetLessonForStudent,
+    GetLessonForTeacher,
+    
 }

@@ -112,3 +112,6 @@
 ## Twenty-third commit
 - added the getAllLessons function to the lessonController
 - added the getLesson function to the lessonController
+
+## Twenty-fourth commit
+- added the get all lessons for both the teacher and student
