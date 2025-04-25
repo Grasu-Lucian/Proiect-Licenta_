@@ -90,3 +90,6 @@
 # 2025-04-25
 ## Eighteenth commit
 - added updateCourse function to the courseController
+
+## Nineteenth commit
+- added deleteCourse function to the courseController

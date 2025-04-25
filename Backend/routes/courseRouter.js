@@ -12,4 +12,6 @@ router.put('/course/:id', authMiddlewareTeacher, courseController.PublishCourse)
 //update course
 router.put('/courseupdate/:id', authMiddlewareTeacher, courseController.updateCourse);
 router.get('/coursesforstudents', authMiddleware, courseController.getCoursesforStudents);
+router.delete('/course/:id', authMiddlewareTeacher, courseController.deleteCourse);
+
 module.exports = router;

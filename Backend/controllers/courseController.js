@@ -144,6 +144,33 @@ const updateCourse = async (req, res) => {
     }
 };
 
+const deleteCourse = async (req, res) => {
+    try {
+        // Get the course by ID
+        const course = await Course.findByPk(req.params.id);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Check if the course belongs to the teacher by comparing the FKTeacherID with the req.userId
+        if (course.FKTeacherID !== req.userId) {
+            return res.status(403).json({ message: 'You do not have permission to delete this course' });
+        }
+
+        // Delete the course
+        const deletedCourse = await Course.destroy({ where: { CourseID: req.params.id } });
+        if (!deletedCourse) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Return a success message
+        return res.status(200).json({ message: 'Course deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting course:', error);
+        return res.status(500).json({ message: 'An error occurred while deleting the course' });
+    }
+};
+
 module.exports = {
     CreateCourse,
     GetTeacherCourse,
@@ -151,4 +178,5 @@ module.exports = {
     PublishCourse,
     getCoursesforStudents,
     updateCourse,
+    deleteCourse,
 };
