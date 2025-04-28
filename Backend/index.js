@@ -20,6 +20,7 @@ app.use('/api', require('./routes/lessonRouter'));
 app.use('/api', require('./routes/ticketRouter'));
 app.use('/api', require('./routes/replyRouter'));
 app.use('/api', require('./routes/seenRouter'));
+app.use('/api', require('./routes/ratingRouter'));
 sequelize.sync()
   .then(() => {
     app.listen(port, () => {
