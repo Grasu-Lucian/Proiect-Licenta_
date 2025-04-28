@@ -11,6 +11,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
 app.use('/api', require('./routes/studentRouter'));
 app.use('/api', require('./routes/teacherRouter'));
 app.use('/api', require('./routes/courseRouter'));
@@ -18,6 +19,7 @@ app.use('/api', require('./routes/enrollRouter'));
 app.use('/api', require('./routes/lessonRouter'));
 app.use('/api', require('./routes/ticketRouter'));
 app.use('/api', require('./routes/replyRouter'));
+app.use('/api', require('./routes/seenRouter'));
 sequelize.sync()
   .then(() => {
     app.listen(port, () => {
