@@ -17,6 +17,7 @@ app.use('/api', require('./routes/courseRouter'));
 app.use('/api', require('./routes/enrollRouter'));
 app.use('/api', require('./routes/lessonRouter'));
 app.use('/api', require('./routes/ticketRouter'));
+app.use('/api', require('./routes/replyRouter'));
 sequelize.sync()
   .then(() => {
     app.listen(port, () => {
