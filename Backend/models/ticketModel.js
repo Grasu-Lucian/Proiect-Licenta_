@@ -48,16 +48,6 @@ const Ticket = sequelize.define('Ticket', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
-  FKTicketID: {
-    type: DataTypes.INTEGER,
-    allowNull: true, // Nullable for main tickets, set for replies
-    references: {
-      model: 'Tickets', // Self-referencing the Ticket table
-      key: 'TicketID',
-    },
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  },
   Status: {
     type: DataTypes.ENUM('open', 'closed'), // Only two options: 'open' and 'closed'
     defaultValue: 'open', // Default value is 'open'
@@ -69,9 +59,6 @@ const Ticket = sequelize.define('Ticket', {
 });
 
 // Define relationships
-Ticket.hasMany(Ticket, { as: 'Replies', foreignKey: 'FKTicketID' });
-Ticket.belongsTo(Ticket, { as: 'Parent', foreignKey: 'FKTicketID' });
-
 Student.hasMany(Ticket, { foreignKey: 'FKStudentID' });
 Ticket.belongsTo(Student, { foreignKey: 'FKStudentID' });
 
