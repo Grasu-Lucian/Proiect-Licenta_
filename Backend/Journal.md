@@ -118,3 +118,16 @@
 
 ## Twenty-fifth commit
 -added all the ticket models and funcitonalities 
+
+# 2025-05-02
+
+## Twenty-sixth commit
+- added the ticket model to the models folder
+- added the ticket router to the routes folder
+- added the ticket router to the index.js file
+- added the ticket controller to the controllers folder
+- added the createTicket function to the ticket controller
+- added the getAllTickets function to the ticket controller
+- added the getTicket function to the ticket controller
+- added the deleteTicket function to the ticket controller
+- added cors to the index.js file

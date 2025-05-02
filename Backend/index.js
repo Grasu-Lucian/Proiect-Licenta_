@@ -2,9 +2,13 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 const port = 3307;
-
+const cors= require('cors');
 const sequelize = require('./config/db');
-
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true, // Allow cookies if needed
+}));
 
 app.use(express.json());
 
