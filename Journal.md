@@ -134,3 +134,6 @@
 
 ## Twenty-seventh commit
 added the front end and multiple routes 
+
+# 2025-05-03
+added the homepage route to the frontend
