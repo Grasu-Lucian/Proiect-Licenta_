@@ -75,7 +75,8 @@ const loginStudent = async (req, res) => {
       }
     );
     // Return the token and the existing student object
-    return res.status(200).json({  message: 'Login successful',token});
+    //without the password
+    return res.status(200).json({ token, FirstName: student.FirstName, LastName: student.LastName, Email: student.Email });
   };
 const getStudent = async (req, res) => {
     // seach for the student with the given id
