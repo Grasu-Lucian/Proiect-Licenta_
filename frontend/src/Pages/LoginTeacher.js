@@ -19,7 +19,7 @@ const LoginTeacher = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3307/api/teachers/login', formData);
+      const res = await axios.post('http://localhost:3307/api/teacher/login', formData);
 
       // Store the token and other details in localStorage
       const teacher_token = res.data.token;

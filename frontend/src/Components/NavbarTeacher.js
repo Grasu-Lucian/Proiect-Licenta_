@@ -68,12 +68,18 @@ const NavbarTeacher = () => {
                 Settings
               </button>
               {/* Logout Button */}
-              <button
-                onClick={() => navigate('/logout')}
-                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Logout
-              </button>
+            <button
+            onClick={() => {
+                localStorage.removeItem('teacher_token'); // Remove the token from localStorage
+                localStorage.removeItem('FirstName'); // Optionally remove other user details
+                localStorage.removeItem('LastName');
+                localStorage.removeItem('Email');
+                navigate('/'); // Redirect to the login page
+            }}
+            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+            Logout
+            </button>
             </div>
           )}
         </div>

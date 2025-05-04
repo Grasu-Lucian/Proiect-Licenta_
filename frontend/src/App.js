@@ -9,6 +9,7 @@ import LoginTeacher from './Pages/LoginTeacher';
 import ProtectedTeacherRoute from './Components/ProtectedTeacherRoute';
 import TeacherDashboard from './Pages/TeacherDashboard';
 import NavbarTeacher from './Components/NavbarTeacher';
+import CheckCourses from './Pages/CheckCourses';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/register/teacher" element={<RegisterTeacher />} />
         <Route path="/login/teacher" element={<LoginTeacher />} />
         <Route path="/teacher-dashboard" element={<ProtectedTeacherRoute><NavbarTeacher/><TeacherDashboard /></ProtectedTeacherRoute>} />
+        <Route path="/check-courses" element={<ProtectedTeacherRoute><NavbarTeacher/><CheckCourses/></ProtectedTeacherRoute>} />
+        
         {/* Add more routes as needed */}
       </Routes>
     </Router>
