@@ -72,8 +72,8 @@ const loginTeacher = async (req, res) => {
     { expiresIn: process.env.JWT_EXPIRATION }
   );
 
-  // Return the token
-  return res.status(200).json({ message: 'Login successful', token });
+ // Return the token and the teacher object without the password
+  return res.status(200).json({ token, FirstName: existingTeacher.FirstName, LastName: existingTeacher.LastName, Email: existingTeacher.Email });
 };
 
 // Get teacher profile

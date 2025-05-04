@@ -4,6 +4,12 @@ import RegisterStudent from './Pages/RegisterStudent';
 import StudentDashboard from './Pages/StudentDashboard';
 import ProtectedStudentRoute from './Components/ProtectedStudentRoute';
 import LoginStudent from './Pages/LoginStudent';
+import RegisterTeacher from './Pages/RegisterTeacher';
+import LoginTeacher from './Pages/LoginTeacher';
+import ProtectedTeacherRoute from './Components/ProtectedTeacherRoute';
+import TeacherDashboard from './Pages/TeacherDashboard';
+
+
 function App() {
   return (
     <Router>
@@ -19,6 +25,10 @@ function App() {
             </ProtectedStudentRoute>
           }
         />
+        <Route path="/register/teacher" element={<RegisterTeacher />} />
+        <Route path="/login/teacher" element={<LoginTeacher />} />
+        <Route path="/teacher-dashboard" element={<ProtectedTeacherRoute><TeacherDashboard /></ProtectedTeacherRoute>} />
+        {/* Add more routes as needed */}
       </Routes>
     </Router>
   );

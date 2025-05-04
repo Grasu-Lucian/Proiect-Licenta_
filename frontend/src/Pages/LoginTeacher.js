@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const LoginStudent = () => {
+const LoginTeacher = () => {
   const [formData, setFormData] = useState({
     Email: '',
     Password: '',
   });
 
   const [error, setError] = useState(null);
-  let student_token = null; // Variable to store the student token
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,23 +19,19 @@ const LoginStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3307/api/student/login', formData);
+      const res = await axios.post('http://localhost:3307/api/teachers/login', formData);
 
-      // Store the token in the student_token variable
-      student_token = res.data.token;
-
-      // Store other details in localStorage
+      // Store the token and other details in localStorage
+      const teacher_token = res.data.token;
+      localStorage.setItem('teacher_token', teacher_token);
       localStorage.setItem('FirstName', res.data.FirstName);
       localStorage.setItem('LastName', res.data.LastName);
       localStorage.setItem('Email', res.data.Email);
-      localStorage.setItem('student_token', student_token); // Save the token in localStorage
 
-      setError(null); // Clear any previous errors
-
-      // Navigate to the Student Dashboard
-      navigate('/student-dashboard');
+      // Redirect to the teacher dashboard
+      navigate('/teacher-dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred');
+      setError(err.response?.data?.message || 'Invalid email or password.');
     }
   };
 
@@ -52,7 +47,7 @@ const LoginStudent = () => {
         </button>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Login Student</h1>
+      <h1 className="text-3xl font-bold mb-6">Teacher Login</h1>
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
@@ -67,7 +62,7 @@ const LoginStudent = () => {
             name="Email"
             value={formData.Email}
             onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />
         </div>
@@ -81,26 +76,24 @@ const LoginStudent = () => {
             name="Password"
             value={formData.Password}
             onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
             required
           />
         </div>
+        {error && (
+          <div className="bg-red-100 text-red-800 p-4 rounded-md mb-4">
+            <p>{error}</p>
+          </div>
+        )}
         <button
           type="submit"
-          className="w-full bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
         >
           Login
         </button>
       </form>
-
-      {/* Display Error */}
-      {error && (
-        <div className="mt-6 bg-red-100 text-red-800 p-4 rounded-md">
-          <p>Error: {error}</p>
-        </div>
-      )}
     </div>
   );
 };
 
-export default LoginStudent;
+export default LoginTeacher;
