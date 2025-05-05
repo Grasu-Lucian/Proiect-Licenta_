@@ -106,6 +106,33 @@ const CheckCourses = () => {
             >
               Check Lessons
             </button>
+            {/* Delete Course Button */}
+            <button
+              onClick={async () => {
+                try {
+                  const token = localStorage.getItem('teacher_token'); // Retrieve the token from localStorage
+                  if (!token) {
+                    throw new Error('No token found. Please log in.');
+                  }
+
+                  // Send DELETE request to the API
+                  await axios.delete(`http://localhost:3307/api/course/${course.CourseID}`, {
+                    headers: {
+                      Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+                    },
+                  });
+
+                  // Remove the course from the local state
+                  setCourses((prevCourses) => prevCourses.filter((c) => c.CourseID !== course.CourseID));
+                  alert('Course deleted successfully!');
+                } catch (err) {
+                  alert(err.response?.data?.message || err.message || 'An error occurred while deleting the course.');
+                }
+              }}
+              className="mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+            >
+              Delete Course
+            </button>
           </li>
         ))}
       </ul>
@@ -118,7 +145,10 @@ const CheckCourses = () => {
         >
           Add Another Course
         </button>
+        
       )}
+
+      
     </div>
   );
 };
