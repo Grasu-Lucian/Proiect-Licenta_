@@ -14,6 +14,7 @@ import CreateCourses from './Pages/CreateCourses';
 import CheckLessons from './Pages/CheckLessons';
 import CreateLessons from './Pages/CreateLessons';
 import LessonDetails from './Pages/LessonDetails';
+import NavbarStudent from './Components/NavbarStudent';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           path="/student-dashboard"
           element={
             <ProtectedStudentRoute>
+              <NavbarStudent />
               <StudentDashboard />
             </ProtectedStudentRoute>
           }
