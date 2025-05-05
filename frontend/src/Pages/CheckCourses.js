@@ -99,12 +99,12 @@ const CheckCourses = () => {
                 Make Public
               </button>
             )}
-            {/* Add Lesson Button */}
+            {/* Check Lessons Button */}
             <button
-              onClick={() => navigate(`/add-lesson/${course.CourseID}`)} // Navigate to the Add Lesson page with the course ID
+              onClick={() => navigate(`/check-lessons/${course.CourseID}`)} // Navigate to the Check Lessons page with the course ID
               className="mt-2 bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600"
             >
-              Add Lesson
+              Check Lessons
             </button>
           </li>
         ))}
