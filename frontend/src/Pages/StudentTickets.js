@@ -206,26 +206,7 @@ const StudentTickets = () => {
               ))}
             </div>
           )}
-        </div>
-        {/* Reply Input */}
-        <div className="border-t border-gray-200 p-3 bg-white">
-          <div className="flex space-x-4">
-            <input
-              type="text"
-              value={newReply}
-              onChange={(e) => setNewReply(e.target.value)}
-              placeholder="Type your reply..."
-              className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onKeyPress={(e) => e.key === 'Enter' && handleSendReply()}
-            />
-            <button
-              onClick={handleSendReply}
-              disabled={!newReply.trim()}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Send
-            </button>
-          </div>
+
         </div>
       </div>
 
@@ -258,28 +239,31 @@ const StudentTickets = () => {
               </div>
 
               {/* Replies */}
-              {replies.map((reply) => (
-                <div
-                  key={reply.ReplyID}
-                  className={`flex ${reply.IsTeacher ? 'justify-start' : 'justify-end'} mb-4`}
-                >
+              {replies.map((reply) => {
+                const isStudentReply = reply.Username === localStorage.getItem('FirstName') + ' ' + localStorage.getItem('LastName');
+                return (
                   <div
-                    className={`rounded-lg p-3 max-w-[85%] ${
-                      reply.IsTeacher
-                        ? 'bg-gray-100 text-gray-800'
-                        : 'bg-blue-500 text-white'
-                    }`}
+                    key={reply.ReplyID}
+                    className={`flex ${isStudentReply ? 'justify-end' : 'justify-start'} mb-4`}
                   >
-                    <p className={`text-xs font-medium mb-1 ${reply.IsTeacher ? 'text-gray-600' : 'text-blue-100'}`}>
-                      {reply.Username}
-                    </p>
-                    <p className="whitespace-pre-wrap text-sm">{reply.ReplyText}</p>
-                    <p className={`text-xs mt-1 ${reply.IsTeacher ? 'text-gray-500' : 'text-blue-100'}`}>
-                      {new Date(reply.createdAt).toLocaleString()}
-                    </p>
+                    <div
+                      className={`rounded-lg p-3 max-w-[85%] ${
+                        isStudentReply
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-white text-gray-800 border border-gray-200'
+                      }`}
+                    >
+                      <p className={`text-xs font-medium mb-1 ${isStudentReply ? 'text-blue-100' : 'text-gray-600'}`}>
+                        {reply.Username}
+                      </p>
+                      <p className="whitespace-pre-wrap text-sm">{reply.ReplyText}</p>
+                      <p className={`text-xs mt-1 ${!isStudentReply ? 'text-gray-500' : 'text-blue-100'}`}>
+                        {new Date(reply.createdAt).toLocaleString()}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Reply Input */}
@@ -298,7 +282,7 @@ const StudentTickets = () => {
                   type="text"
                   value={newReply}
                   onChange={(e) => setNewReply(e.target.value)}
-                  placeholder="Type your message..."
+                  placeholder=""
                   className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   disabled={selectedTicket?.Status === 'Closed'}
                 />
