@@ -122,50 +122,67 @@ const CheckStudentLesson = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 px-4 py-8">
-      {error && (
-        <div className="bg-red-100 text-red-800 p-4 rounded-md mb-4 max-w-4xl mx-auto">
-          {error}
-        </div>
-      )}
-
-      <div className="max-w-4xl mx-auto w-full bg-white rounded-lg shadow-md p-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">{lesson.Title}</h1>
-          <p className="text-gray-600 text-lg mb-4">{lesson.Description}</p>
-          
-          <div className="grid grid-cols-2 gap-4 mb-6 text-sm text-gray-600">
-            <div>
-              <span className="font-semibold">Chapter:</span> {lesson.LessonNumber}
-            </div>
-            {lesson.PdfContent && (
-              <div>
-                <span className="font-semibold">PDF Content:</span> Available
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="prose max-w-none mb-8 bg-gray-50 p-6 rounded-lg">
-          <div dangerouslySetInnerHTML={{ __html: lesson.Content }} />
-        </div>
-
-        {lesson.PdfContent && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">PDF Content</h2>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <div dangerouslySetInnerHTML={{ __html: lesson.PdfContent }} />
-            </div>
+    <div className="flex flex-col min-h-screen bg-gray-100">
+      <div className="flex-1 px-4 py-8">
+        {error && (
+          <div className="bg-red-100 text-red-800 p-4 rounded-md mb-4 max-w-4xl mx-auto">
+            {error}
           </div>
         )}
 
-        <div className="flex justify-end mt-8">
-          <button
-            onClick={handleNext}
-            className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Next Lesson
-          </button>
+        <div className="max-w-4xl mx-auto w-full bg-white rounded-lg shadow-md p-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-4">{lesson.Title}</h1>
+            <p className="text-gray-600 text-lg mb-4">{lesson.Description}</p>
+            
+            <div className="grid grid-cols-2 gap-4 mb-6 text-sm text-gray-600">
+              <div>
+                <span className="font-semibold">Chapter:</span> {lesson.LessonNumber}
+              </div>
+              {lesson.PdfContent && (
+                <div>
+                  <span className="font-semibold">PDF Content:</span> Available
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="prose max-w-none mb-8 bg-gray-50 p-6 rounded-lg">
+            <div dangerouslySetInnerHTML={{ __html: lesson.Content }} />
+          </div>
+
+          {lesson.PdfContent && (
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-4">PDF Content</h2>
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <div dangerouslySetInnerHTML={{ __html: lesson.PdfContent }} />
+              </div>
+            </div>
+          )}
+
+          <div className="border-t pt-6 mt-8">
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-gray-600">Something not clear?</p>
+              <button
+                onClick={() => navigate(`/student/course/${lesson?.FKCourseID}/open-ticket`)}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Open a Ticket
+              </button>
+            </div>
+          </div>
+
+          <div className="flex justify-end mt-8">
+            <button
+              onClick={handleNext}
+              className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+            >
+              Next Lesson
+            </button>
+          </div>
         </div>
       </div>
 

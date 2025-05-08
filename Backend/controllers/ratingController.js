@@ -37,6 +37,18 @@ const createRating = async (req, res) => {
         return res.status(400).json({ message: 'Student not found' });
     }
 
+    // Check if student has already rated this course
+    const existingRating = await Rating.findOne({
+        where: {
+            FKStudentID: studentId,
+            FKCourseID: CourseID
+        }
+    });
+
+    if (existingRating) {
+        return res.status(400).json({ message: 'You have already rated this course' });
+    }
+
     // Create the rating
     const newRating = await Rating.create({
         FKStudentID: studentId,

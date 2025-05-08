@@ -71,6 +71,13 @@ const NavbarStudent = () => {
                 Available Courses
               </button>
               <hr className="border-gray-300" />
+              {/* Support Tickets Button */}
+              <button
+                onClick={() => navigate('/student-tickets')}
+                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
+                Support Tickets
+              </button>
               {/* Settings Button */}
               <button
                 onClick={() => navigate('/student-settings')}

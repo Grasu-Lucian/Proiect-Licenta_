@@ -18,6 +18,8 @@ import CheckStudentCourses from './Pages/CheckStudentCourses';
 import CheckStudentLessons from './Pages/CheckStudentLessons';
 import CheckStudentLesson from './Pages/CheckStudentLesson';
 import ProtectedStudentRoute from './Components/ProtectedStudentRoute';
+import OpenTicket from './Pages/OpenTicket';
+import StudentTickets from './Pages/StudentTickets';
 
 function App() {
   return (
@@ -61,6 +63,18 @@ function App() {
           <ProtectedStudentRoute>
             <NavbarStudent/>
             <CheckStudentLesson />
+          </ProtectedStudentRoute>
+        } />
+        <Route path="/student/course/:courseId/open-ticket" element={
+          <ProtectedStudentRoute>
+            <NavbarStudent/>
+            <OpenTicket />
+          </ProtectedStudentRoute>
+        } />
+        <Route path="/student-tickets" element={
+          <ProtectedStudentRoute>
+            <NavbarStudent/>
+            <StudentTickets />
           </ProtectedStudentRoute>
         } />
       </Routes>

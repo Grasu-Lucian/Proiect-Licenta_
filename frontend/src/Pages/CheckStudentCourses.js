@@ -4,8 +4,24 @@ import { useNavigate } from 'react-router-dom';
 
 const CheckStudentCourses = () => {
   const [courses, setCourses] = useState([]);
+  const [courseRatings, setCourseRatings] = useState({});
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const fetchCourseRatings = async (courseId) => {
+    try {
+      const token = localStorage.getItem('student_token');
+      const response = await axios.get(`http://localhost:3307/api/rating/${courseId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (err) {
+      console.error(`Failed to fetch ratings for course ${courseId}:`, err);
+      return [];
+    }
+  };
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -23,8 +39,20 @@ const CheckStudentCourses = () => {
 
         if (response.data && Array.isArray(response.data)) {
           setCourses(response.data);
+          
+          // Fetch ratings for each course
+          const ratingsPromises = response.data.map(course => fetchCourseRatings(course.CourseID));
+          const allRatings = await Promise.all(ratingsPromises);
+          
+          // Create an object mapping courseId to ratings
+          const ratingsMap = {};
+          response.data.forEach((course, index) => {
+            ratingsMap[course.CourseID] = allRatings[index];
+          });
+          setCourseRatings(ratingsMap);
         } else {
           setCourses([]);
+          setCourseRatings({});
         }
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch your enrolled courses');
@@ -54,11 +82,39 @@ const CheckStudentCourses = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {courses.map((course) => (
-              <div key={course.CourseID} className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-xl font-semibold mb-2">{course.Title}</h3>
-                <p className="text-gray-600 mb-4">{course.Description}</p>
+              <div key={course.CourseID} className="bg-white rounded-lg shadow-md p-8">
+                <h3 className="text-2xl font-semibold mb-4">{course.Title}</h3>
+                
+                {/* Course Description */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold mb-3">Description</h4>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{course.CourseDescription}</p>
+                  </div>
+                </div>
+                
+                {/* Course Ratings Section */}
+                <div className="mb-4">
+                  <h4 className="text-lg font-semibold mb-2">Course Ratings</h4>
+                  {courseRatings[course.CourseID]?.length > 0 ? (
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {courseRatings[course.CourseID].map((rating, index) => (
+                        <div key={index} className="bg-gray-50 p-3 rounded">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{rating.Username}</span>
+                            <span className="text-yellow-500">{"★".repeat(rating.Rating)}</span>
+                          </div>
+                          <p className="text-gray-600 text-sm mt-1">{rating.RatingDescription}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 italic">No ratings yet</p>
+                  )}
+                </div>
+
                 <div className="space-y-2">
                   <button
                     onClick={() => navigate(`/student/course/${course.CourseID}/lessons`)}
