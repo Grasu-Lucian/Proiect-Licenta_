@@ -20,6 +20,7 @@ import CheckStudentLesson from './Pages/CheckStudentLesson';
 import ProtectedStudentRoute from './Components/ProtectedStudentRoute';
 import OpenTicket from './Pages/OpenTicket';
 import StudentTickets from './Pages/StudentTickets';
+import TeacherTickets from './Pages/TeacherTickets';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/check-lessons/:courseId" element={<ProtectedTeacherRoute><NavbarTeacher/><CheckLessons/></ProtectedTeacherRoute>} />
         <Route path="/create-lesson/:courseId" element={<ProtectedTeacherRoute><NavbarTeacher/><CreateLessons/></ProtectedTeacherRoute>} />
         <Route path="/lesson-details/:lessonId" element={<ProtectedTeacherRoute><NavbarTeacher/><LessonDetails/></ProtectedTeacherRoute>} />
+        <Route path="/teacher-tickets" element={<ProtectedTeacherRoute><NavbarTeacher/><TeacherTickets/></ProtectedTeacherRoute>} />
         
         {/* Student Routes */}
         <Route path="/student-dashboard" element={
