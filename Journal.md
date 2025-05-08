@@ -139,3 +139,32 @@ added the front end and multiple routes
 ## Twenty-eighth commit
 -added the login
 added the homepage route to the frontend
+
+# 2025-05-08
+
+## Twenty-ninth commit
+- Added Student Dashboard functionality
+  - Created StudentDashboard component in frontend
+  - Implemented course enrollment functionality
+  - Added error handling for enrollment attempts
+  - Removed "Your Courses" section to focus on available courses
+
+## Thirtieth commit
+- Updated backend course controller
+  - Modified getCoursesforStudents function to filter out enrolled courses
+  - Added logic to check student's enrolled courses before displaying available courses
+  - Improved error handling and response messages
+
+## Thirty-first commit
+- Enhanced Student Dashboard UI/UX
+  - Added proper error messages when no courses are found
+  - Improved course display and enrollment button functionality
+  - Added loading states and error handling in the frontend
+  - Ensured courses array is always properly formatted
+
+## Thirty-second commit
+- Fixed frontend course display issues
+  - Added proper handling for empty course arrays
+  - Added clear messages when no courses are available for enrollment
+  - Improved error message display for various scenarios
+  - Added proper state management for courses and errors

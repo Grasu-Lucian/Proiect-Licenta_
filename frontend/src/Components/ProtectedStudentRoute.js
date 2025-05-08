@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 const ProtectedStudentRoute = ({ children }) => {
@@ -10,7 +9,7 @@ const ProtectedStudentRoute = ({ children }) => {
   // Redirect to the login page if not authenticated
   if (!isAuthenticated) {
     console.error('Authentication failed. Missing required data.');
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login/student" replace />;
   }
 
   // Render the protected component if authenticated

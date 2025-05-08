@@ -1,5 +1,6 @@
 const Course = require('../models/courseModel');
 const Teacher = require('../models/teacherModel');
+const Enrolled = require('../models/enrolledModel'); // Add this line
 
 const CreateCourse = async (req, res) => {
     const { Title, CourseDescription, Price } = req.body;
@@ -91,27 +92,39 @@ return res.status(200).json({ message: 'Course published successfully' });
 
 const getCoursesforStudents = async (req, res) => {
     try {
-        // Get all courses that are public
-        const courses = await Course.findAll({ where: { CourseStatus: 'public' } });
-        if (!courses || courses.length === 0) {
+        // First, get all courses that are public
+        const allCourses = await Course.findAll({ where: { CourseStatus: 'public' } });
+        if (!allCourses || allCourses.length === 0) {
             return res.status(404).json({ message: 'No courses found' });
+        }
+
+        // Get the courses the student is already enrolled in
+        const enrolledCourses = await Enrolled.findAll({ where: { FKStudentID: req.userId } });
+        const enrolledCourseIds = enrolledCourses.map(enrolled => enrolled.FKCourseID);
+
+        // Filter out courses the student is already enrolled in
+        const availableCourses = allCourses.filter(course => !enrolledCourseIds.includes(course.CourseID));
+
+        // If no courses are available
+        if (availableCourses.length === 0) {
+            return res.status(200).json({ message: 'No courses available for enrollment' });
         }
 
         // Fetch teacher details for each course
         const coursesForStudents = await Promise.all(
-            courses.map(async (course) => {
+            availableCourses.map(async (course) => {
                 const teacher = await Teacher.findByPk(course.FKTeacherID);
                 return {
                     CourseID: course.CourseID,
                     Title: course.Title,
                     CourseDescription: course.CourseDescription,
                     TeacherName: teacher ? `${teacher.FirstName} ${teacher.LastName}` : 'Unknown',
-                    Price: course.Price, // Include the price
+                    Price: course.Price,
                 };
             })
         );
 
-        // Return the courses with teacher details
+        // Return the filtered courses with teacher details
         return res.status(200).json(coursesForStudents);
     } catch (error) {
         console.error('Error fetching courses for students:', error);

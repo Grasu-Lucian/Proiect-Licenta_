@@ -1,83 +1,109 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-// student dashboard should have the available courses to get available  from here http://localhost:3307/api/coursesforstudents  student_token required for the link and the student_token is in  the locakstorage
 
 const StudentDashboard = () => {
+  const [courses, setCourses] = useState([]);
+  const [error, setError] = useState(null);
 
-    const [courses, setCourses] = useState([]);
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const token = localStorage.getItem('student_token');
+        if (!token) {
+          throw new Error('No token found. Please log in.');
+        }
 
-    useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                const token = localStorage.getItem('student_token');
-                if (!token) {
-                    throw new Error('No token found. Please log in.');
-                }
+        const response = await axios.get('http://localhost:3307/api/coursesforstudents', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-                const response = await axios.get('http://localhost:3307/api/coursesforstudents', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setCourses(response.data);
-                setError(null);
-            } catch (err) {
-                setError(err.response?.data?.message || err.message || 'An error occurred while fetching courses.');
-            }
-        };
+        // Ensure we always have an array of courses
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setCourses(data);
+        } else if (data && typeof data === 'object') {
+          setCourses([data]); // Wrap single object in array
+        } else {
+          setCourses([]);
+        }
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to fetch courses');
+      }
+    };
 
-        fetchCourses();
-    }, []);
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
-            <h1 className="text-3xl font-bold mb-6">Student Dashboard</h1>
-            {error && (
-                <div className="bg-red-100 text-red-800 p-4 rounded-md mb-4">
-                    <p>{error}</p>
-                </div>
-            )}
-            <ul className="space-y-4">
-                {courses.map((course) => (
-                    <li key={course.id} className="p-4 border rounded-md shadow bg-white">
-                        <h2 className="text-lg font-bold mb-2">{course.Title}</h2>
-                        <p className="text-gray-700 mb-2">{course.CourseDescription}</p>
-                        {/* the button will enroll you to the course by doing a post request to the http://localhost:3307/api/enroll/:courseId also add the bearer token of the student as well*/}
-                        <button
-                            onClick={async () => {
-                                try {
-                                    const token = localStorage.getItem('student_token');
-                                    if (!token) {
-                                        throw new Error('No token found. Please log in.');
-                                    }
+    fetchCourses();
+  }, []);
 
-                                    const response = await axios.post(`http://localhost:3307/api/enroll/${course.CourseID}`, {}, {
-                                        headers: {
-                                            Authorization: `Bearer ${token}`,
-                                        },
-                                    });
-                                    alert("Succesfully enrolled in the course"); // Show success message
-                                } catch (err) {
-                                    alert(err.response?.data?.message || err.message || 'An error occurred while enrolling in the course.');
-                                }
-                            }}
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                        >
-                            Enroll in the Course
-                        </button>
-                    </li>
-                ))}
-            </ul>
+  const handleEnroll = async (courseId) => {
+    try {
+      const token = localStorage.getItem('student_token');
+      if (!token) {
+        throw new Error('No token found. Please log in.');
+      }
 
+      const response = await axios.post(`http://localhost:3307/api/enroll/${courseId}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // After successful enrollment, remove the course from the list
+      setCourses(courses.filter((course) => course.CourseID !== courseId));
+
+      // Show success message
+      alert('Successfully enrolled in the course!');
+    } catch (err) {
+      if (err.response?.data?.message === 'Student is already enrolled in this course') {
+        alert('You are already enrolled in this course!');
+      } else {
+        setError(err.response?.data?.message || 'Failed to enroll in course');
+        alert('Failed to enroll in the course. Please try again.');
+      }
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
+      <h1 className="text-3xl font-bold mb-6">Student Dashboard</h1>
+      
+      {error && (
+        <div className="bg-red-100 text-red-800 p-4 rounded-md mb-4">
+          {error}
         </div>
-    );
+      )}
+
+      <div className="w-full max-w-4xl">
+        <h2 className="text-2xl font-semibold mb-4">Courses to Get Enrolled In</h2>
+        
+        {courses.length === 0 ? (
+          <p className="text-gray-600">No courses are currently available for enrollment.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {courses.map((course) => (
+              <div key={course.CourseID} className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-xl font-semibold mb-2">{course.Title}</h3>
+                <p className="text-gray-600 mb-4">{course.Description}</p>
+                <div className="flex justify-between items-center">
+                  <p className="text-sm text-gray-500">
+                    {new Date(course.CreatedAt).toLocaleDateString()}
+                  </p>
+                  <button
+                    onClick={() => handleEnroll(course.CourseID)}
+                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                  >
+                    Enroll
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
-
-
-
 
 export default StudentDashboard;
