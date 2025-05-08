@@ -10,6 +10,34 @@ const StudentTickets = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const handleCloseTicket = async () => {
+    if (!selectedTicket) return;
+
+    try {
+      const token = localStorage.getItem('student_token');
+      if (!token) return;
+
+      await axios.put(
+        `http://localhost:3307/api/ticket/${selectedTicket.TicketID}/status`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` }}
+      );
+
+      // Update the ticket status locally
+      setTickets(prevTickets =>
+        prevTickets.map(ticket =>
+          ticket.TicketID === selectedTicket.TicketID
+            ? { ...ticket, Status: 'Closed' }
+            : ticket
+        )
+      );
+      setSelectedTicket(prev => ({ ...prev, Status: 'Closed' }));
+    } catch (err) {
+      console.error('Error closing ticket:', err.response?.data || err.message);
+      setError('Failed to close ticket');
+    }
+  };
+
   const fetchReplies = async (ticketId) => {
     setLoading(true);
     try {
@@ -242,8 +270,11 @@ const StudentTickets = () => {
                         : 'bg-blue-500 text-white'
                     }`}
                   >
+                    <p className={`text-xs font-medium mb-1 ${reply.IsTeacher ? 'text-gray-600' : 'text-blue-100'}`}>
+                      {reply.Username}
+                    </p>
                     <p className="whitespace-pre-wrap text-sm">{reply.ReplyText}</p>
-                    <p className="text-xs mt-1 opacity-75">
+                    <p className={`text-xs mt-1 ${reply.IsTeacher ? 'text-gray-500' : 'text-blue-100'}`}>
                       {new Date(reply.createdAt).toLocaleString()}
                     </p>
                   </div>
@@ -253,6 +284,15 @@ const StudentTickets = () => {
 
             {/* Reply Input */}
             <div className="border-t border-gray-200 p-4">
+              <div className="flex justify-between items-center mb-4">
+                <button
+                  onClick={handleCloseTicket}
+                  disabled={selectedTicket?.Status === 'Closed'}
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {selectedTicket?.Status === 'Closed' ? 'Ticket Closed' : 'Close Ticket'}
+                </button>
+              </div>
               <form onSubmit={handleSubmitReply} className="flex space-x-4">
                 <input
                   type="text"
@@ -260,10 +300,11 @@ const StudentTickets = () => {
                   onChange={(e) => setNewReply(e.target.value)}
                   placeholder="Type your message..."
                   className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  disabled={selectedTicket?.Status === 'Closed'}
                 />
                 <button
                   type="submit"
-                  disabled={!newReply.trim()}
+                  disabled={!newReply.trim() || selectedTicket?.Status === 'Closed'}
                   className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 transition-colors"
                 >
                   Send
