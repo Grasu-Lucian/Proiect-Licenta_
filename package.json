@@ -1,0 +1,20 @@
+{
+  "name": "proiect-licenta",
+  "version": "1.0.0",
+  "description": "A project for managing backend and frontend services",
+  "main": "index.js",
+  "scripts": {
+    "start": "node Backend/index.js",
+    "frontend": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run start\" \"npm run frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "axios": "^1.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
