@@ -21,6 +21,7 @@ import ProtectedStudentRoute from './Components/ProtectedStudentRoute';
 import OpenTicket from './Pages/OpenTicket';
 import StudentTickets from './Pages/StudentTickets';
 import TeacherTickets from './Pages/TeacherTickets';
+import Settings from './Pages/Settings';
 import EditLesson from './Pages/EditLesson';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/lesson-details/:lessonId" element={<ProtectedTeacherRoute><NavbarTeacher/><LessonDetails/></ProtectedTeacherRoute>} />
         <Route path="/edit-lesson/:lessonId" element={<ProtectedTeacherRoute><NavbarTeacher/><EditLesson/></ProtectedTeacherRoute>} />
         <Route path="/teacher-tickets" element={<ProtectedTeacherRoute><NavbarTeacher/><TeacherTickets/></ProtectedTeacherRoute>} />
+        <Route path="/teacher/settings" element={<ProtectedTeacherRoute><NavbarTeacher/><Settings /></ProtectedTeacherRoute>} />
         
         {/* Student Routes */}
         <Route path="/student-dashboard" element={
@@ -79,6 +81,12 @@ function App() {
           <ProtectedStudentRoute>
             <NavbarStudent/>
             <StudentTickets />
+          </ProtectedStudentRoute>
+        } />
+        <Route path="/student-settings" element={
+          <ProtectedStudentRoute>
+            <NavbarStudent/>
+            <Settings />
           </ProtectedStudentRoute>
         } />
       </Routes>
