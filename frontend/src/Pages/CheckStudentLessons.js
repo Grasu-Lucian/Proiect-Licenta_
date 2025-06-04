@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
+// Utility function to truncate text with ellipsis
+const truncateText = (text, limit = 100) => {
+  if (!text) return '';
+  return text.length > limit ? `${text.substring(0, limit)}...` : text;
+};
+
 const CheckStudentLessons = () => {
   const [lessons, setLessons] = useState([]);
   const [error, setError] = useState(null);
@@ -72,7 +78,7 @@ const CheckStudentLessons = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="text-xl font-semibold mb-2">{lesson.Title}</h3>
-                    <p className="text-gray-600">{lesson.Description}</p>
+                    <p className="text-gray-600">{truncateText(lesson.Description)}</p>
                   </div>
                   <div className="flex items-center space-x-2">
                     {lesson.seen && (
