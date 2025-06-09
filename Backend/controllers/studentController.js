@@ -1,5 +1,5 @@
 const Student = require('../models/studentModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const registerStudent = async (req, res) => {
@@ -19,7 +19,7 @@ const registerStudent = async (req, res) => {
   }
 
 // Hash the password
-  const hashedPassword = await bcrypt.hash(Password, 10);
+  const hashedPassword = await bcrypt.hash(Password, 12);
 // Create a new student
   const newStudent = await Student.create({
     FirstName,
@@ -156,7 +156,7 @@ const getStudent = async (req, res) => {
     return res.status(400).json({ message: 'Incorrect password' });
   }
   // Hash the new password
-  const hashedPassword = await bcrypt.hash(NewPassword, 10);
+  const hashedPassword = await bcrypt.hash(NewPassword, 12);
   // Update the password
   const updatedStudent = await Student.update(
     { Password: hashedPassword },
