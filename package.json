@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node Backend/index.js",
-    "frontend": "npm start --prefix frontend",
+    "frontend": "cd frontend && npm install && npm start",
     "dev": "concurrently \"npm run start\" \"npm run frontend\""
   },
   "dependencies": {
