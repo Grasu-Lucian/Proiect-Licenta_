@@ -9,7 +9,7 @@
     "dev": "concurrently \"npm run start\" \"npm run frontend\""
   },
   "devDependencies": {
-    "concurrently": "^7.6.0"
+    
   },
   "dependencies": {
     "aos": "^2.3.4",
