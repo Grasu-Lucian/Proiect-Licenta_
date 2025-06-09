@@ -124,7 +124,7 @@ const StudentTickets = () => {
         }
 
         console.log('Fetching tickets...');
-        const response = await axios.get('http://localhost:3307/api/tickets/student', {
+        const response = await axios.get('https://proiect-licenta-1.onrender.com/api/tickets/student', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

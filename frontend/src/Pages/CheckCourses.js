@@ -116,7 +116,7 @@ const CheckCourses = () => {
                   }
 
                   // Send DELETE request to the API
-                  await axios.delete(`http://localhost:3307/api/course/${course.CourseID}`, {
+                  await axios.delete(`https://proiect-licenta-1.onrender.com/api/course/${course.CourseID}`, {
                     headers: {
                       Authorization: `Bearer ${token}`, // Add the token to the Authorization header
                     },

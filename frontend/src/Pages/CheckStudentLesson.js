@@ -103,7 +103,7 @@ const CheckStudentLesson = () => {
   const handleRatingSubmit = async () => {
     try {
       const token = localStorage.getItem('student_token');
-      await axios.post(`http://localhost:3307/api/rating/${lesson.FKCourseID}`, {
+      await axios.post(`https://proiect-licenta-1.onrender.com/api/rating/${lesson.FKCourseID}`, {
         Rating: rating,
         RatingDescription: ratingDescription
       }, {

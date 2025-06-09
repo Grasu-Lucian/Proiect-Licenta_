@@ -69,7 +69,7 @@ const StudentDashboard = () => {
         throw new Error('No token found. Please log in.');
       }
 
-      await axios.post(`http://localhost:3307/api/enroll/${courseId}`, null, {
+      await axios.post(`https://proiect-licenta-1.onrender.com/api/enroll/${courseId}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -25,7 +25,7 @@ const CreateLessons = () => {
         throw new Error('No token found. Please log in.');
       }
 
-      const response = await axios.post(`http://localhost:3307/api/lesson/${courseId}`, lesson, {
+      const response = await axios.post(`https://proiect-licenta-1.onrender.com/api/lesson/${courseId}`, lesson, {
         headers: {
           Authorization: `Bearer ${token}`, // Add the token to the Authorization header
         },
