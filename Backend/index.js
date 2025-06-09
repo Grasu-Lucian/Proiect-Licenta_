@@ -5,7 +5,7 @@ const port = 3307;
 const cors= require('cors');
 const sequelize = require('./config/db');
 app.use(cors({
-  origin: ['http://localhost:3000','https://grasu-lucian-thesis.netlify.app/'], // Replace with your frontend URL
+  origin: ['http://localhost:3000','https://grasu-lucian-thesis.netlify.app'], // Replace with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
   credentials: true, // Allow cookies if needed
 }));
