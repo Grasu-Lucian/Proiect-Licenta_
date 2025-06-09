@@ -20,7 +20,7 @@ const CheckStudentLesson = () => {
         }
 
         // Get current lesson details
-        const lessonResponse = await axios.get(`http://localhost:3307/api/lessonforstudent/${lessonId}`, {
+        const lessonResponse = await axios.get(`https://proiect-licenta-1.onrender.com/api/lessonforstudent/${lessonId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -44,7 +44,7 @@ const CheckStudentLesson = () => {
 
       try {
         // 1. Try to mark current lesson as seen
-        await axios.post(`http://localhost:3307/api/seen/${lessonId}`, {}, {
+        await axios.post(`https://proiect-licenta-1.onrender.com/api/seen/${lessonId}`, {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } catch (seenError) {
@@ -55,7 +55,7 @@ const CheckStudentLesson = () => {
       }
 
       // 2. Get current lesson to get course ID
-      const currentLessonResponse = await axios.get(`http://localhost:3307/api/lessonforstudent/${lessonId}`, {
+      const currentLessonResponse = await axios.get(`https://proiect-licenta-1.onrender.com/api/lessonforstudent/${lessonId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -66,7 +66,7 @@ const CheckStudentLesson = () => {
       const courseId = currentLessonResponse.data.FKCourseID;
 
       // 3. Get all lessons for this course
-      const courseLessonsResponse = await axios.get(`http://localhost:3307/api/lessonsforstudent/${courseId}`, {
+      const courseLessonsResponse = await axios.get(`https://proiect-licenta-1.onrender.com/api/lessonsforstudent/${courseId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

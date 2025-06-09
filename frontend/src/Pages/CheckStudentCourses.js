@@ -11,7 +11,7 @@ const CheckStudentCourses = () => {
   const fetchCourseRatings = async (courseId) => {
     try {
       const token = localStorage.getItem('student_token');
-      const response = await axios.get(`http://localhost:3307/api/rating/${courseId}`, {
+      const response = await axios.get(`https://proiect-licenta-1.onrender.com/api/rating/${courseId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

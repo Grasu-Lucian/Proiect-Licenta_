@@ -16,7 +16,7 @@ const CheckCourses = () => {
           throw new Error('No token found. Please log in.');
         }
 
-        const response = await axios.get('http://localhost:3307/api/coursesforteacher', {
+        const response = await axios.get('https://proiect-licenta-1.onrender.com/api/coursesforteacher', {
           headers: {
             Authorization: `Bearer ${token}`, // Add the token to the Authorization header
           },
@@ -41,7 +41,7 @@ const CheckCourses = () => {
         throw new Error('No token found. Please log in.');
       }
 
-      await axios.put(`http://localhost:3307/api/course/${courseId}`, {}, {
+      await axios.put(`https://proiect-licenta-1.onrender.com/api/course/${courseId}`, {}, {
         headers: {
           Authorization: `Bearer ${token}`, // Add the token to the Authorization header
         },
