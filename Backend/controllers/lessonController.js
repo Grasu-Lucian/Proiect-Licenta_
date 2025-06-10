@@ -3,7 +3,7 @@ const Course = require('../models/courseModel');
 const Enrolled = require('../models/enrolledModel');
 //lesson number will be decided based on the number of lessons atached to the course
 const CreateLesson = async (req, res) => {
-    const { Title, Description, PdfContent} = req.body;
+    const { Title, Description } = req.body;
     // Check if the course exists
     const course = await Course.findByPk(req.params.id);
     if (!course) {
@@ -25,7 +25,6 @@ const CreateLesson = async (req, res) => {
     const newLesson = await Lesson.create({
         Title,
         Description,
-        PdfContent,
         LessonNumber: lessonNumber,
         FKCourseID: req.params.id,
     });
@@ -110,16 +109,76 @@ const GetLessonForTeacher = async (req, res) => {
 
 };
 
+const DeleteLesson = async (req, res) => {
+    try {
+        // Get the lesson by id
+        const lesson = await Lesson.findByPk(req.params.id);
+        if (!lesson) {
+            return res.status(404).json({ message: 'Lesson not found' });
+        }
 
+        // Check if the course belongs to the teacher
+        const course = await Course.findByPk(lesson.FKCourseID);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+        if (course.FKTeacherID !== req.userId) {
+            return res.status(403).json({ message: 'You do not have permission to delete this lesson' });
+        }
 
+        // Delete the lesson
+        await lesson.destroy();
 
+        // Return success message
+        return res.status(200).json({ message: 'Lesson deleted successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 
+const UpdateLesson = async (req, res) => {
+    try {
+        const { Title, Description } = req.body;
+
+        // Get the lesson by id
+        const lesson = await Lesson.findByPk(req.params.id);
+        if (!lesson) {
+            return res.status(404).json({ message: 'Lesson not found' });
+        }
+
+        // Check if the course belongs to the teacher
+        const course = await Course.findByPk(lesson.FKCourseID);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+        if (course.FKTeacherID !== req.userId) {
+            return res.status(403).json({ message: 'You do not have permission to update this lesson' });
+        }
+
+        // Validate required fields
+        if (!Title || !Description) {
+            return res.status(400).json({ message: 'Please provide all required fields' });
+        }
+
+        // Update the lesson
+        await lesson.update({
+            Title,
+            Description,
+        });
+
+        // Return the updated lesson
+        return res.status(200).json(lesson);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 
 module.exports = {
     CreateLesson,
     GetAllLessonsStudents,
-    GetAllLessonsForTeacher,
     GetLessonForStudent,
+    GetAllLessonsForTeacher,
     GetLessonForTeacher,
-    
-}
+    DeleteLesson,
+    UpdateLesson,
+};    

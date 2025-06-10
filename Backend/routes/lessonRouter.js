@@ -8,6 +8,9 @@ router.get('/lessonsforteacher/:id', authMiddlewareTeacher, lessonController.Get
 router.get('/lessonsforstudent/:id', authMiddleware, lessonController.GetAllLessonsStudents); // Get all lessons for a specific student
 router.get('/lessonforteacher/:id', authMiddlewareTeacher, lessonController.GetLessonForTeacher); // Get a specific lesson for a specific teacher
 router.get('/lessonforstudent/:id', authMiddleware, lessonController.GetLessonForStudent); // Get a specific lesson for a specific student
+router.delete('/lesson/:id', authMiddlewareTeacher, lessonController.DeleteLesson); // Delete a specific lesson
+router.put('/lesson/:id', authMiddlewareTeacher, lessonController.UpdateLesson); // Update a specific lesson
+
 module.exports = router;
 
 
