@@ -22,7 +22,7 @@ const RegisterStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3307/api/students', formData);
+      const res = await axios.post('https://proiect-licenta-1.onrender.com/api/students', formData);
 
       // Store the token in the student_token variable
       student_token = res.data.token;

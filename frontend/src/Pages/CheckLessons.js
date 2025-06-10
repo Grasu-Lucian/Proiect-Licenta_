@@ -48,7 +48,7 @@ const CheckLessons = () => {
           throw new Error('No token found. Please log in.');
         }
 
-        const response = await axios.get(`http://localhost:3307/api/lessonsforteacher/${courseId}`, {
+        const response = await axios.get(`https://proiect-licenta-1.onrender.com/api/lessonsforteacher/${courseId}`, {
           headers: {
             Authorization: `Bearer ${token}`, // Add the token to the Authorization header
           },

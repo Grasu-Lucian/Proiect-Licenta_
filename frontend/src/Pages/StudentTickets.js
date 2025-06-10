@@ -18,7 +18,7 @@ const StudentTickets = () => {
       if (!token) return;
 
       await axios.put(
-        `http://localhost:3307/api/ticket/${selectedTicket.TicketID}/status`,
+        `https://proiect-licenta-1.onrender.com/api/ticket/${selectedTicket.TicketID}/status`,
         {},
         { headers: { Authorization: `Bearer ${token}` }}
       );
@@ -44,7 +44,7 @@ const StudentTickets = () => {
       const token = localStorage.getItem('student_token');
       if (!token) return;
 
-      const response = await axios.get(`http://localhost:3307/api/reply/${ticketId}/student`, {
+      const response = await axios.get(`https://proiect-licenta-1.onrender.com/api/reply/${ticketId}/student`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,7 +73,7 @@ const StudentTickets = () => {
       const token = localStorage.getItem('student_token');
       if (!token) return;
 
-      await axios.post(`http://localhost:3307/api/reply/${selectedTicket.TicketID}/student`, 
+      await axios.post(`https://proiect-licenta-1.onrender.com/api/reply/${selectedTicket.TicketID}/student`, 
         { ReplyText: newReply },
         { headers: { Authorization: `Bearer ${token}` }}
       );
@@ -98,7 +98,7 @@ const StudentTickets = () => {
       }
 
       await axios.post(
-        `http://localhost:3307/api/reply/${selectedTicket.TicketID}/student`,
+        `https://proiect-licenta-1.onrender.com/api/reply/${selectedTicket.TicketID}/student`,
         { ReplyText: newReply },
         {
           headers: {
@@ -124,7 +124,7 @@ const StudentTickets = () => {
         }
 
         console.log('Fetching tickets...');
-        const response = await axios.get('http://localhost:3307/api/tickets/student', {
+        const response = await axios.get('https://proiect-licenta-1.onrender.com/api/tickets/student', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -13,7 +13,7 @@ const OpenTicket = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('student_token');
-      await axios.post(`http://localhost:3307/api/ticket/${courseId}`, {
+      await axios.post(`https://proiect-licenta-1.onrender.com/api/ticket/${courseId}`, {
         Title: title,
         TicketDescription: description
       }, {

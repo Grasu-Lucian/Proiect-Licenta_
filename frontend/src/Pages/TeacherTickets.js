@@ -15,7 +15,7 @@ const TeacherTickets = () => {
       const token = localStorage.getItem('teacher_token');
       if (!token) return;
 
-      const response = await axios.get(`http://localhost:3307/api/reply/${ticketId}/teacher`, {
+      const response = await axios.get(`https://proiect-licenta-1.onrender.com/api/reply/${ticketId}/teacher`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,7 +44,7 @@ const TeacherTickets = () => {
       const token = localStorage.getItem('teacher_token');
       if (!token) return;
 
-      await axios.post(`http://localhost:3307/api/reply/${selectedTicket.TicketID}/teacher`, 
+      await axios.post(`https://proiect-licenta-1.onrender.com/api/reply/${selectedTicket.TicketID}/teacher`, 
         { ReplyText: newReply },
         { headers: { Authorization: `Bearer ${token}` }}
       );
@@ -68,7 +68,7 @@ const TeacherTickets = () => {
         }
 
         console.log('Fetching tickets...');
-        const response = await axios.get('http://localhost:3307/api/tickets/teacher', {
+        const response = await axios.get('https://proiect-licenta-1.onrender.com/api/tickets/teacher', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

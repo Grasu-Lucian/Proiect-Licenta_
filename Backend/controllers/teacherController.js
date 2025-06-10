@@ -1,5 +1,5 @@
 const Teacher = require('../models/teacherModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // Register a new teacher

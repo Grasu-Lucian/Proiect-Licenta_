@@ -26,7 +26,7 @@ const CreateCourses = () => {
       }
 
       const response = await axios.post(
-        'http://localhost:3307/api/course',
+        'https://proiect-licenta-1.onrender.com/api/course',
         formData,
         {
           headers: {

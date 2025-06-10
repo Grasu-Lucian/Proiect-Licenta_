@@ -19,7 +19,7 @@ const LoginTeacher = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3307/api/teacher/login', formData);
+      const res = await axios.post('https://proiect-licenta-1.onrender.com/api/teacher/login', formData);
 
       // Store the token and other details in localStorage
       const teacher_token = res.data.token;
