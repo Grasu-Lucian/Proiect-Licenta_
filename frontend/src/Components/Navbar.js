@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <div className="fixed top-0 left-0 w-full h-16 px-6 py-2 bg-gradient-to-r from-teal-500 to-blue-600 shadow-lg z-50 flex justify-between items-center">
+    <div className="fixed top-0 left-0 w-[86%] sm:w-full h-16 px-6 py-2 bg-gradient-to-r from-teal-500 to-blue-600 shadow-lg z-50 flex justify-between items-center">
       <Link to="/" className="text-2xl font-bold text-white">
         <span className="text-cyan-300">BrightPath</span>
       </Link>
