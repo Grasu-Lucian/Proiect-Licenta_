@@ -23,7 +23,7 @@ const CheckStudentLessons = () => {
         }
 
         // Fetch lessons with progress for the course
-        const response = await axios.get(`https://proiect-licenta-1.onrender.com/api/lessonsforstudent/${courseId}`, {
+        const response = await axios.get(`https://proiect-licenta-5.onrender.com/api/lessonsforstudent/${courseId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

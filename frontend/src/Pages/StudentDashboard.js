@@ -19,7 +19,7 @@ const StudentDashboard = () => {
   const fetchCourseRatings = async (courseId) => {
     try {
       const token = localStorage.getItem('student_token');
-      const response = await axios.get(`https://proiect-licenta-1.onrender.com/api/rating/${courseId}`, {
+      const response = await axios.get(`https://proiect-licenta-5.onrender.com/api/rating/${courseId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const StudentDashboard = () => {
           throw new Error('No token found. Please log in.');
         }
 
-        const response = await axios.get('https://proiect-licenta-1.onrender.com/api/coursesforstudents', {
+        const response = await axios.get('https://proiect-licenta-5.onrender.com/api/coursesforstudents', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
