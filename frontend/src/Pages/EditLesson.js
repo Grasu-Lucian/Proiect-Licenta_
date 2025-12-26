@@ -20,7 +20,7 @@ const EditLesson = () => {
           throw new Error('No token found. Please log in.');
         }
 
-        const response = await axios.get(`http://localhost:3307/api/lessonforteacher/${lessonId}`, {
+        const response = await axios.get(`https://proiect-licenta-5.onrender.com/api/lessonforteacher/${lessonId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -45,7 +45,7 @@ const EditLesson = () => {
         throw new Error('No token found. Please log in.');
       }
 
-      await axios.put(`http://localhost:3307/api/lesson/${lessonId}`, lesson, {
+      await axios.put(`https://proiect-licenta-5.onrender.com/api/lesson/${lessonId}`, lesson, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

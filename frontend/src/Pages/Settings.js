@@ -29,12 +29,12 @@ const Settings = () => {
         token = studentToken;
         type = 'student';
         // Replace with actual student profile fetch URL
-        fetchUrl = 'http://localhost:3307/api/student'; 
+        fetchUrl = 'https://proiect-licenta-5.onrender.com/api/student'; 
       } else if (teacherToken) {
         token = teacherToken;
         type = 'teacher';
         // Replace with actual teacher profile fetch URL
-        fetchUrl = 'http://localhost:3307/api/teacher'; 
+        fetchUrl = 'https://proiect-licenta-5.onrender.com/api/teacher'; 
       }
 
       if (!token) {
@@ -96,11 +96,11 @@ const Settings = () => {
     if (userType === 'student' && studentToken) {
       token = studentToken;
       // Replace with actual student profile update URL
-      updateUrl = 'http://localhost:3307/api/student'; 
+      updateUrl = 'https://proiect-licenta-5.onrender.com/api/student'; 
     } else if (userType === 'teacher' && teacherToken) {
       token = teacherToken;
       // Replace with actual teacher profile update URL
-      updateUrl = 'http://localhost:3307/api/teacher'; 
+      updateUrl = 'https://proiect-licenta-5.onrender.com/api/teacher'; 
     }
 
     if (!token || !updateUrl) {
@@ -149,10 +149,10 @@ const Settings = () => {
 
     if (userType === 'student' && studentToken) {
       token = studentToken;
-      passwordUpdateUrl = 'http://localhost:3307/api/student/password';
+      passwordUpdateUrl = 'https://proiect-licenta-5.onrender.com/api/student/password';
     } else if (userType === 'teacher' && teacherToken) {
       token = teacherToken;
-      passwordUpdateUrl = 'http://localhost:3307/api/teacher/password';
+      passwordUpdateUrl = 'https://proiect-licenta-5.onrender.com/api/teacher/password';
     }
 
     if (!token || !passwordUpdateUrl) {
